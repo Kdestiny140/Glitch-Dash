@@ -85,15 +85,15 @@ public class PlayerMovement : MonoBehaviour
     void TriggerGameOver()
     {
         gameOver = true;
-        Debug.Log("Loading Game Over scene...");
+        Debug.Log("Loading Game Over 1 scene...");
 
-        if (Application.CanStreamedLevelBeLoaded("Game Over"))
+        if (Application.CanStreamedLevelBeLoaded("Game Over 1"))
         {
-            SceneManager.LoadScene("Game Over");
+            SceneManager.LoadScene("Game Over 1");
         }
         else
         {
-            Debug.LogError("Game Over scene not found in Build Settings!");
+            Debug.LogError("Game Over 1 scene not found in Build Settings!");
         }
     }
 
