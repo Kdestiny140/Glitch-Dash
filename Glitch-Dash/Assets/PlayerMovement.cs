@@ -1,61 +1,120 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;  // Required for scene loading
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 5f; // Speed of movement
-    public float jumpForce = 5f; // Jump force
-    private Rigidbody rb; // Rigidbody component for physics-based movement
-    private bool isGrounded; // Check if the player is grounded
-    public bool gameOver = false; // Game over flag
+    public float speed = 5f;
+    public float jumpForce = 5f;
+    private Rigidbody rb;
+    private bool isGrounded;
+    public bool gameOver = false;
+    public AudioClip backgroundMusic;
+    private AudioSource audioSource;
 
-    void Start()
+    void Awake()
     {
-        rb = GetComponent<Rigidbody>(); // Initialize Rigidbody
+        rb = GetComponent<Rigidbody>();
+
+        // Handle background music
+        audioSource = gameObject.AddComponent<AudioSource>();
+        if (backgroundMusic != null)
+        {
+            audioSource.clip = backgroundMusic;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+        else
+        {
+            Debug.LogWarning("Background music not assigned in PlayerMovement!");
+        }
     }
 
     void Update()
     {
-        if (!gameOver) // Only move if game isn't over
+        if (!gameOver)
         {
-            // Left/Right movement (using A/D or Left/Right)
-            float moveX = Input.GetAxis("Horizontal"); // A/D or Left/Right
-            float moveZ = Input.GetAxis("Vertical");   // W/S or Up/Down
+            MovePlayer();
+        }
+    }
 
-            // Move the player using Rigidbody physics (not transform)
-            Vector3 movement = new Vector3(moveX, 0, moveZ) * speed * Time.deltaTime;
-            rb.MovePosition(transform.position + movement); // Use Rigidbody's MovePosition for smooth movement
+    void MovePlayer()
+    {
+        float moveX = Input.GetAxis("Horizontal");
+        float moveZ = Input.GetAxis("Vertical");
 
-            // Jump (spacebar), but only if the player is grounded
-            if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-            {
-                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); // Apply an upward force
-                isGrounded = false;  // Player is no longer grounded once they jump
-            }
+        Vector3 movement = new Vector3(moveX, 0, moveZ).normalized * speed * Time.deltaTime;
+        rb.MovePosition(transform.position + movement);
+
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            isGrounded = false;
         }
     }
 
     void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("Collided with: " + collision.gameObject.name + " | Tag: " + collision.gameObject.tag);
+
         if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;  // Player is grounded when colliding with the ground
-        }
+            isGrounded = true;
 
         if (collision.gameObject.CompareTag("Obstacle"))
         {
-            gameOver = true;  // Game Over when hitting an obstacle
-            Debug.Log("Game Over!");
+            TriggerGameOver();
         }
 
-        // You can add more conditions here for interactions with other objects (e.g., Finish)
+        if (collision.gameObject.CompareTag("Finish"))
+        {
+            Debug.Log("Finish collision detected, loading Next Level...");
+            TriggerNextLevel();
+        }
     }
 
-    // Optional: Handle collision exit to unground player when in the air
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Triggered with: " + other.gameObject.name + " | Tag: " + other.gameObject.tag);
+
+        if (other.CompareTag("Finish"))
+        {
+            Debug.Log("Finish trigger detected, loading Next Level...");
+            TriggerNextLevel();
+        }
+    }
+
+    void TriggerGameOver()
+    {
+        gameOver = true;
+        Debug.Log("Loading Game Over scene...");
+
+        if (Application.CanStreamedLevelBeLoaded("Game Over"))
+        {
+            SceneManager.LoadScene("Game Over");
+        }
+        else
+        {
+            Debug.LogError("Game Over scene not found in Build Settings!");
+        }
+    }
+
+    void TriggerNextLevel()
+    {
+        gameOver = true;
+        Debug.Log("Attempting to load Next Level scene...");
+
+        if (Application.CanStreamedLevelBeLoaded("Next Level"))
+        {
+            SceneManager.LoadScene("Next Level");
+        }
+        else
+        {
+            Debug.LogError("Next Level scene not found in Build Settings!");
+        }
+    }
+
     void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = false; // Player is no longer grounded if leaving the ground
-        }
+            isGrounded = false;
     }
 }

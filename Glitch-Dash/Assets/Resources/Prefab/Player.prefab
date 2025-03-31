@@ -125,6 +125,10 @@ MonoBehaviour:
   speed: 5
   jumpForce: 5
   gameOver: 0
+  gameOverPanel: {fileID: 0}
+  nextLevelUIPanel: {fileID: 0}
+  collectedObjectVisual: {fileID: 0}
+  backgroundMusic: {fileID: 8300000, guid: 30984e079f3fe3b4d9f6f30c912ba746, type: 3}
 --- !u!54 &3976821254339413424
 Rigidbody:
   m_ObjectHideFlags: 0

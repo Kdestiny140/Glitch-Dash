@@ -9,6 +9,7 @@ TagManager:
   - Obstacle
   - ObstacleMovement
   - groundcheck
+  - Collectible
   layers:
   - Default
   - TransparentFX
