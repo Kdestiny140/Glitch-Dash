@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;  // Required for scene loading
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -8,14 +8,19 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     private bool isGrounded;
     public bool gameOver = false;
+
     public AudioClip backgroundMusic;
+    public AudioClip finishSound;
     private AudioSource audioSource;
+
+    private Vector3 checkpointPosition;
+    private bool hasUsedCheckpoint = false;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
 
-        // Handle background music
+        // Setup Audio
         audioSource = gameObject.AddComponent<AudioSource>();
         if (backgroundMusic != null)
         {
@@ -52,24 +57,40 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision collision)
+ void OnCollisionEnter(Collision collision)
+{
+    Debug.Log("Collided with: " + collision.gameObject.name + " | Tag: " + collision.gameObject.tag);
+
+    if (collision.gameObject.CompareTag("Ground"))
+        isGrounded = true;
+
+    if (collision.gameObject.CompareTag("Obstacle"))
     {
-        Debug.Log("Collided with: " + collision.gameObject.name + " | Tag: " + collision.gameObject.tag);
-
-        if (collision.gameObject.CompareTag("Ground"))
-            isGrounded = true;
-
-        if (collision.gameObject.CompareTag("Obstacle"))
+        if (!hasUsedCheckpoint)
         {
-            TriggerGameOver();
+            checkpointPosition = transform.position;
+            hasUsedCheckpoint = true;
+            Debug.Log("Checkpoint saved at: " + checkpointPosition);
+            Invoke(nameof(RespawnAtCheckpoint), 1f); // Delay respawn
         }
-
-        if (collision.gameObject.CompareTag("Finish"))
+        else if (!gameOver) // Ensure it only triggers once
         {
-            Debug.Log("Finish collision detected, loading Next Level...");
-            TriggerNextLevel();
+            gameOver = true;
+            Debug.Log("Second death — showing Game Over screen...");
+            Invoke(nameof(TriggerGameOver), 1f); // Delay Game Over
         }
     }
+
+    if (collision.gameObject.CompareTag("Finish"))
+    {
+        if (!gameOver)
+        {
+            gameOver = true;
+            Debug.Log("Finish collision detected, loading Next Level...");
+            Invoke(nameof(TriggerNextLevel), 1f);
+        }
+    }
+}
 
     void OnTriggerEnter(Collider other)
     {
@@ -77,7 +98,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (other.CompareTag("Finish"))
         {
-            Debug.Log("Finish trigger detected, loading Next Level...");
             TriggerNextLevel();
         }
     }
@@ -102,6 +122,16 @@ public class PlayerMovement : MonoBehaviour
         gameOver = true;
         Debug.Log("Attempting to load Next Level scene...");
 
+        if (finishSound != null)
+        {
+            AudioSource.PlayClipAtPoint(finishSound, transform.position);
+        }
+
+        Invoke("LoadNextLevelScene", 1f); // delay to let sound play
+    }
+
+    void LoadNextLevelScene()
+    {
         if (Application.CanStreamedLevelBeLoaded("Next Level"))
         {
             SceneManager.LoadScene("Next Level");
@@ -110,6 +140,14 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.LogError("Next Level scene not found in Build Settings!");
         }
+    }
+
+    void RespawnAtCheckpoint()
+    {
+        gameOver = false;
+        rb.linearVelocity = Vector3.zero;
+        transform.position = checkpointPosition + new Vector3(0, 1, 0); // lifted to prevent ground collision
+        Debug.Log("Respawned at checkpoint.");
     }
 
     void OnCollisionExit(Collision collision)

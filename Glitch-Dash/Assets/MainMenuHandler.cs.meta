@@ -1,2 +1,17 @@
 fileFormatVersion: 2
 guid: 3a1272569f3af454391fb29c3aaa4aba
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - optionsPanel: {instanceID: 0}
+  - musicVolumeSlider: {instanceID: 0}
+  - fullscreenToggle: {instanceID: 0}
+  - resolutionDropdown: {instanceID: 0}
+  - qualityDropdown: {instanceID: 0}
+  - audioMixer: {fileID: 24100000, guid: ecc31df61b2380846b8ba83be75b689a, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

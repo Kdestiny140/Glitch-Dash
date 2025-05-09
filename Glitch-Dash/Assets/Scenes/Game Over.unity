@@ -267,6 +267,7 @@ GameObject:
   - component: {fileID: 367838736}
   - component: {fileID: 367838735}
   - component: {fileID: 367838738}
+  - component: {fileID: 367838739}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -291,8 +292,8 @@ Camera:
   m_GameObject: {fileID: 367838734}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.90110964, g: 0.9433962, b: 0.6274475, a: 0}
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.627451, g: 0.94509804, b: 0.83959013, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -392,6 +393,15 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!45 &367838739
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 367838734}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: 131cf78c8b60c734884c539da7081b62, type: 2}
 --- !u!1 &377001328
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,8 +468,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281874488
-  m_fontColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
+    rgba: 4294243578
+  m_fontColor: {r: 0.9811321, g: 0.9579922, b: 0.9579922, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -772,9 +782,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 1, g: 0.759434, b: 0.91769624, a: 1}
-    m_PressedColor: {r: 1, g: 0.7607843, b: 0.92156863, a: 1}
-    m_SelectedColor: {r: 1, g: 0.7607843, b: 0.92156863, a: 1}
+    m_HighlightedColor: {r: 0.15123104, g: 0.14609292, b: 0.46226418, a: 1}
+    m_PressedColor: {r: 0.15294118, g: 0.14901961, b: 0.4627451, a: 1}
+    m_SelectedColor: {r: 0.15294118, g: 0.14901961, b: 0.4627451, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -950,9 +960,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.5999911, g: 0.90496665, b: 0.9150943, a: 1}
-    m_PressedColor: {r: 0.6, g: 0.90588236, b: 0.91764706, a: 1}
-    m_SelectedColor: {r: 0.6, g: 0.90588236, b: 0.91764706, a: 1}
+    m_HighlightedColor: {r: 0.2285066, g: 0.5293403, b: 0.745283, a: 1}
+    m_PressedColor: {r: 0.23137255, g: 0.5294118, b: 0.7490196, a: 1}
+    m_SelectedColor: {r: 0.23137255, g: 0.5294118, b: 0.7490196, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1

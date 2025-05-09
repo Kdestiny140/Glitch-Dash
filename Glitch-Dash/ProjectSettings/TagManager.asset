@@ -10,6 +10,7 @@ TagManager:
   - ObstacleMovement
   - groundcheck
   - Collectible
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
