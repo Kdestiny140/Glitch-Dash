@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI; // Needed for Slider and Dropdown
 using UnityEngine.Audio; // Needed for AudioMixer
+using TMPro;
 
 public class MainMenuHandler : MonoBehaviour
 {
@@ -130,9 +131,17 @@ public class MainMenuHandler : MonoBehaviour
     }
 
     // Called by quality dropdown
-    public void SetQuality(int index)
+public void SetQuality(int index)
+{
+    QualitySettings.SetQualityLevel(index, true);
+
+    if (qualityDropdown != null && qualityDropdown.options.Count > index)
     {
-        QualitySettings.SetQualityLevel(index, true);
         Debug.Log($"Quality set to {qualityDropdown.options[index].text}");
     }
+    else
+    {
+        Debug.LogWarning("Quality dropdown is not assigned or index is out of range.");
+    }
+}
 }

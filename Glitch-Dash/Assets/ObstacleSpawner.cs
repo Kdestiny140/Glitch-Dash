@@ -11,7 +11,9 @@ public class ObstacleSpawner : MonoBehaviour
     public float spawnXLeft = -3f;         // X start for left-to-right (left edge)
     public float spawnXTopMin = -3f;       // Min X for top-to-bottom (left edge)
     public float spawnXTopMax = 0f;        // Max X for top-to-bottom (right edge)
-
+    
+    int numLeftToRight = 10; // Number of obstacles to spawn at once
+    int numTopToBottom = 10;
     void Start()
     {
         if (obstaclePrefab == null)
@@ -22,23 +24,33 @@ public class ObstacleSpawner : MonoBehaviour
 
         StartCoroutine(SpawnObstacles());
     }
-
-    IEnumerator SpawnObstacles()
+IEnumerator SpawnObstacles()
+{
+    while (true)
     {
-        while (true)
+        // Use numLeftToRight here
+        for (int i = 0; i < numLeftToRight; i++)
         {
-            // Spawn left-to-right obstacle from left edge
             Vector3 spawnPosLeft = new Vector3(spawnXLeft, spawnHeightLeft, 0f);
-            SpawnObstacle(spawnPosLeft, Vector3.right); // Move right
-            yield return new WaitForSeconds(leftToRightInterval);
+            SpawnObstacle(spawnPosLeft, Vector3.right);
+            yield return new WaitForSeconds(0.8f);
+        }
 
-            // Spawn top-to-bottom obstacle across full width
+        yield return new WaitForSeconds(leftToRightInterval);
+
+        // Use numTopToBottom here
+        for (int i = 0; i < numTopToBottom; i++)
+        {
             float randomX = Random.Range(spawnXTopMin, spawnXTopMax);
             Vector3 spawnPosTop = new Vector3(randomX, spawnHeightTop, 0f);
-            SpawnObstacle(spawnPosTop, Vector3.down); // Move down
-            yield return new WaitForSeconds(topToBottomInterval);
+            SpawnObstacle(spawnPosTop, Vector3.down);
+            yield return new WaitForSeconds(0.8f);
         }
+
+        yield return new WaitForSeconds(topToBottomInterval);
     }
+}
+
 
     void SpawnObstacle(Vector3 position, Vector3 direction)
     {

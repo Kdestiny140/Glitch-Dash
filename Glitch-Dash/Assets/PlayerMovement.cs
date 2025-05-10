@@ -87,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
         {
             gameOver = true;
             Debug.Log("Finish collision detected, loading Next Level...");
-            Invoke(nameof(TriggerNextLevel), 1f);
+            Object.FindFirstObjectByType<NextLevelUIHandler>().ShowUI(); // Show the next level UI
         }
     }
 }
@@ -130,17 +130,21 @@ public class PlayerMovement : MonoBehaviour
         Invoke("LoadNextLevelScene", 1f); // delay to let sound play
     }
 
-    void LoadNextLevelScene()
+void LoadNextLevelScene()
+{
+    int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+    int nextSceneIndex = currentSceneIndex + 1;
+
+    if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
     {
-        if (Application.CanStreamedLevelBeLoaded("Next Level"))
-        {
-            SceneManager.LoadScene("Next Level");
-        }
-        else
-        {
-            Debug.LogError("Next Level scene not found in Build Settings!");
-        }
+        SceneManager.LoadScene(nextSceneIndex);
+        Debug.Log("Loading scene index: " + nextSceneIndex);
     }
+    else
+    {
+        Debug.LogError("No more scenes in Build Settings!");
+    }
+}
 
     void RespawnAtCheckpoint()
     {

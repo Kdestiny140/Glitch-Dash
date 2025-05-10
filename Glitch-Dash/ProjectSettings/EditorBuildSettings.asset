@@ -6,26 +6,38 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
     path: Assets/Scenes/Main Menu.unity
     guid: a4591e4d1af57cb42856b4081e853d04
   - enabled: 1
+    path: Assets/Scenes/SampleScene.unity
+    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
     path: Assets/Scenes/Next Level.unity
     guid: a421721aab22e674c97b55377b72a986
-  - enabled: 0
-    path: Assets/Scenes/Level 2.unity
-    guid: 99d5d5057cc15444fb5bb1c447109324
   - enabled: 1
     path: Assets/Scenes/Level 2.unity
     guid: 99d5d5057cc15444fb5bb1c447109324
+  - enabled: 1
+    path: Assets/Scenes/Next Level 1.unity
+    guid: 312a8b871b9d47d49b4e6dd9f08fd1c1
+  - enabled: 1
+    path: Assets/Scenes/Level 3.unity
+    guid: 9316aa6f424a8e148aa36aa91e7fdd3d
+  - enabled: 1
+    path: Assets/Scenes/Next Level 2.unity
+    guid: 6178b83caf80f38439254564ad78be3b
+  - enabled: 1
+    path: Assets/Scenes/Level 4.unity
+    guid: 5947fef0a356baa4ba404691f7ce65e3
   - enabled: 1
     path: Assets/Scenes/Game Over.unity
     guid: 723756414b03348498835937f47f3cee
   - enabled: 1
     path: Assets/Scenes/Game Over 1.unity
     guid: 6d3a01bd23fa6814ea7e27bb68a97e10
+  - enabled: 0
+    path: Assets/Scenes/Level 2.unity
+    guid: 99d5d5057cc15444fb5bb1c447109324
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ObstacleMovement : MonoBehaviour
 {
-    public float moveSpeed = 3f;           // Set by ObstacleSpawner
+    public float moveSpeed = 15f;           // Set by ObstacleSpawner
     public Vector3 moveDirection = Vector3.right; // Default, overridden by spawner
 
     void Update()
